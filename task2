@@ -1,0 +1,17 @@
+#!/bin/bash
+#: Description: Check if the entered path of directory exists in the file system, pass current working directory to command line.
+
+## Print the text to inform the user to enter the path of a directory, then read the path
+echo -n "Enter the path of a directory: "; read dir_path
+
+## Check entered directory name, if it exists print "Yes, ..."
+if [ -d "$dir_path" ];
+then
+    echo "Yes, the directory you entered, %s, exists in the file system." $dir_path
+else
+    echo "No, the directory you entered, %s, doesn't exist in the file system." $dir_path
+fi
+ 
+## Give the current working directory to the variable named curr_dir, then print it
+curr_dir=$PWD
+echo "The current working directory is "$curr_dir""

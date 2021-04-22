@@ -1,0 +1,12 @@
+#!/bin/bash
+#: Description: If number is equal, pass the answer to command line.
+
+## Show "Enter the number:" to the user and read an argument
+echo -n "Enter the number:"; read x
+
+## Compare the given number with 20, if it equals to 20, then print the text, "The number you entered equals to 20."
+if [ "$x" -eq $"20" ]
+then
+echo "The number you entered equals to 20."
+
+fi 
