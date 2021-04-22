@@ -1,0 +1,77 @@
+#!/bin/sh
+#: Description: A simple rc script and run the scripts of the previous tasks to show how it works.
+
+. /etc/init.d
+
+## Give script paths to variables named file1 and file2
+file1=/root/Desktop/tasks/task1
+file2=/root/Desktop/tasks/task2
+
+## Run the file
+[ -f $file1 ] || exit 0
+
+case "$1" in
+
+        start)
+		## Print the current state
+                echo "Start the script"
+                $file1 &
+                echo "################"
+		## Create the file named task_res
+                touch /var/lock/subsys/task_res
+                ;;
+        stop)
+		## Print the current state
+                echo -n "Stopped"
+		## If the script stops then kill all processes
+                killall -q -9 $file1 &
+		## Remove the file
+                rm -f /var/lock/subsys/task_res
+                ;;
+        status)
+		## The status of the file
+                status task_res
+                ;;
+        restart|reload)
+                $0 stop
+                $0 start
+                ;;
+        *)
+                echo "Start, stop, restart|reload, status"
+                exit 1
+esac
+
+## Run the script
+[ -f $file2 ] || exit 0
+
+case "$1" in
+
+        start)
+		## Print the current state
+                echo "Start the script"
+                $file2 &
+                echo "################"
+		## Create the file named task_res2
+                touch /var/lock/subsys/task_res2
+                ;;
+        stop)
+		## Print the current state
+                echo -n "Stopping"
+		## If the script stops then kill all processes
+                killall -q -9 $file &
+		## Remove the file named task_res2
+                rm -f /var/lock/subsys/task_res2
+                ;;
+        status)
+                status task_res2
+                ;;
+        restart|reload)
+                $0 stop
+                $0 start
+                ;;
+        *)
+                echo "start, stop, restart|reload, status"
+                exit 1
+esac
+
+exit 0
